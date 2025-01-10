@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ViaCEP App - Result</title>
+</head>
+<body>
+    <h1>Address Information</h1>
+    <ul>
+        <li><strong>ZIP Code:</strong> <span th:text="${cep}"></span></li>
+        <li><strong>Street:</strong> <span th:text="${logradouro}"></span></li>
+        <li><strong>Neighborhood:</strong> <span th:text="${bairro}"></span></li>
+        <li><strong>City:</strong> <span th:text="${localidade}"></span></li>
+        <li><strong>State:</strong> <span th:text="${uf}"></span></li>
+    </ul>
+    <a href="/search">Search Again</a>
+</body>
+</html>
