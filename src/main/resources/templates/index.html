@@ -8,6 +8,13 @@
 <body>
     <h1>Welcome to ViaCEP App</h1>
     <p>Use this app to search for address information by ZIP code.</p>
-    <a href="/search">Search by ZIP Code</a>
+
+    <form action="/search" method="get">
+        <label for="cep">Enter ZIP Code:</label>
+        <input type="text" id="cep" name="cep" required>
+        <button type="submit">Search</button>
+    </form>
+
+    <p><a href="/">Home</a></p>
 </body>
 </html>

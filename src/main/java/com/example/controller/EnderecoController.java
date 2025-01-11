@@ -19,7 +19,7 @@ public class EnderecoController {
         return "index"; // Retorna a página inicial (index.html)
     }
 
-    @GetMapping("/buscar")
+    @GetMapping("/search")
     public String buscarEndereco(@RequestParam String cep, Model model) {
         try {
             // Chama o serviço para buscar o endereço
