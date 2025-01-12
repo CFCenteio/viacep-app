@@ -8,10 +8,28 @@
 <body>
     <h1>Address Information</h1>
     <p><strong>Logradouro:</strong> <span th:text="${endereco.logradouro}"></span></p>
+    <p><strong>Complemento:</strong> <span th:text="${endereco.complemento}"></span></p>
     <p><strong>Bairro:</strong> <span th:text="${endereco.bairro}"></span></p>
     <p><strong>Cidade:</strong> <span th:text="${endereco.localidade}"></span></p>
     <p><strong>Estado:</strong> <span th:text="${endereco.uf}"></span></p>
     <p><strong>CEP:</strong> <span th:text="${endereco.cep}"></span></p>
+
+    <p>Para salvar seu endereço, adicione seu nome e CPF:</p>
+    <form action="/api/usuarios" method="post">
+        <label for="nome">Nome:</label>
+        <input type="text" id="nome" name="nome" required>
+        <br>
+        <label for="cpf">CPF:</label>
+        <input type="text" id="cpf" name="cpf" required>
+        <br>
+        <input type="hidden" name="cep" th:value="${endereco.cep}">
+        <input type="hidden" name="logradouro" th:value="${endereco.logradouro}">
+        <input type="hidden" name="complemento" th:value="${endereco.complemento}">
+        <input type="hidden" name="bairro" th:value="${endereco.bairro}">
+        <input type="hidden" name="cidade" th:value="${endereco.localidade}"> <!-- Mapeia localidade para cidade -->
+        <input type="hidden" name="estado" th:value="${endereco.uf}"> <!-- Mapeia uf para estado -->
+        <button type="submit">Salvar</button>
+    </form>
 
     <p><a href="/">Home</a></p>
 </body>

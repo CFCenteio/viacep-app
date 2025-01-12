@@ -1,7 +1,7 @@
 package com.example.controller;
 
-import com.example.repository.UsuarioRepository;
 import com.example.model.Usuario;
+import com.example.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,8 +18,8 @@ public class UsuarioController {
     private UsuarioRepository usuarioRepository;
 
     // Endpoint: Criar um novo usuário (salvar no banco de dados)
-    @PostMapping
-    public ResponseEntity<Usuario> criarUsuario(@RequestBody Usuario usuario) {
+    @PostMapping(consumes = "application/x-www-form-urlencoded")
+    public ResponseEntity<Usuario> criarUsuario(Usuario usuario) {
         usuario.setDataCriacao(new java.sql.Timestamp(System.currentTimeMillis()));
         Usuario usuarioSalvo = usuarioRepository.save(usuario);
         return new ResponseEntity<>(usuarioSalvo, HttpStatus.CREATED);
@@ -29,6 +29,13 @@ public class UsuarioController {
     @GetMapping
     public List<Usuario> listarUsuarios() {
         return usuarioRepository.findAll();
+    }
+
+    // Endpoint: Buscar um usuário por ID
+    @GetMapping("/{id}")
+    public ResponseEntity<Usuario> buscarUsuarioPorId(@PathVariable Long id) {
+        Optional<Usuario> usuario = usuarioRepository.findById(id);
+        return usuario.map(ResponseEntity::ok).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     // Endpoint: Atualizar um usuário existente
@@ -49,13 +56,7 @@ public class UsuarioController {
     // Endpoint: Deletar um usuário (opcional)
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletarUsuario(@PathVariable Long id) {
-        Optional<Usuario> usuarioExistente = usuarioRepository.findById(id);
-
-        if (usuarioExistente.isPresent()) {
-            usuarioRepository.deleteById(id);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        usuarioRepository.deleteById(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
