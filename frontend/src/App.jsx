@@ -9,7 +9,7 @@ function App() {
       <h1>Consulta de CEP e Gerenciamento de Endereços</h1>
       <AddressForm />
       <hr />
-      <AddressList />
+      {/* <AddressList /> */}
     </div>
   );
 }
