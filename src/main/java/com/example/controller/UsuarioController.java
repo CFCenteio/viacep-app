@@ -18,8 +18,8 @@ public class UsuarioController {
     private UsuarioRepository usuarioRepository;
 
     // Endpoint: Criar um novo usuário (salvar no banco de dados)
-    @PostMapping(consumes = "application/x-www-form-urlencoded")
-    public ResponseEntity<Usuario> criarUsuario(Usuario usuario) {
+    @PostMapping
+    public ResponseEntity<Usuario> criarUsuario(@RequestBody Usuario usuario) {
         usuario.setDataCriacao(new java.sql.Timestamp(System.currentTimeMillis()));
         Usuario usuarioSalvo = usuarioRepository.save(usuario);
         return new ResponseEntity<>(usuarioSalvo, HttpStatus.CREATED);

@@ -50,23 +50,24 @@ function AddressForm() {
   const handleCepBlur = async () => {
     if (formData.cep.length === 8) {
       try {
-        const response = await axios.get(
-          `https://viacep.com.br/ws/${formData.cep}/json/`
-        );
-        if (response.data.erro) {
-          setError("CEP não encontrado.");
+        // Chama o endpoint do backend para consultar o CEP
+        const response = await api.get(`/api/enderecos/${formData.cep}`);
+        // Supondo que a resposta contenha os campos logradouro, bairro, localidade e uf
+        if (!response.data) {
+          setError('CEP não encontrado.');
         } else {
-          setFormData((prev) => ({
+          setFormData(prev => ({
             ...prev,
             logradouro: response.data.logradouro,
             bairro: response.data.bairro,
-            cidade: response.data.localidade,
-            estado: response.data.uf,
+            cidade: response.data.localidade,   // ou 'cidade', dependendo da resposta do backend
+            estado: response.data.uf            // ou 'estado'
           }));
-          setError("");
+          setError('');
         }
       } catch (err) {
-        setError("Erro ao buscar o CEP.");
+        console.error('Erro ao buscar CEP no backend.', err);
+        setError('Erro ao buscar o CEP.');
       }
     }
   };
